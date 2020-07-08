@@ -74,8 +74,8 @@ namespace MovieDB.Data
                     ReleaseDate=DateTime.Parse("2000-09-01"),
                     RunTime=new TimeSpan(1,30,0),
                     Genre=Genre.Action,
-                    DirectorId = 1,    
-                    Actors=new List<Actor> {} 
+                    DirectorId = 1,
+                    Actors=new List<Actor> {}
                 },
                 new Movie
                 {
@@ -122,15 +122,15 @@ namespace MovieDB.Data
         {
             var actor = context.Actors.SingleOrDefault(a => a.Name.Equals(actorName));
             var movie = context.Movies.SingleOrDefault(m => m.Title.Equals(movieName));
-            
+
             var actorHasMovie = actor.Movies.SingleOrDefault(m => m.Title.Equals(movieName)); // Find movie in actor's movies
             var movieHasActor = movie.Actors.SingleOrDefault(a => a.Name.Equals(actorName)); // Find actor in movie's actors
-            
+
             if (actorHasMovie == null && movieHasActor == null)
             {
                 actor.Movies.Add(movie);
                 movie.Actors.Add(actor);
-            }            
+            }
         }
     }
 }

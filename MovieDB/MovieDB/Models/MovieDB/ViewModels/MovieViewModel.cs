@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MovieDB.Models.MovieDB.MovieModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace MovieDB.Models.MovieDB.MovieModels
+namespace MovieDB.Models.MovieDB.ViewModels
 {
-    public class Movie
-    {
-        public int Id { get; set; }
+    public class MovieViewModel
+    {        
         public string Title { get; set; }
         [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
@@ -17,19 +17,7 @@ namespace MovieDB.Models.MovieDB.MovieModels
         public TimeSpan RunTime { get; set; }
         public int DirectorId { get; set; }
         public Genre Genre { get; set; }
-
-        
-        public virtual Director Director { get; set; }
-
-        public virtual ICollection<Actor> Actors { get; set; }
-    }
-
-    public enum Genre
-    {
-        Action,
-        Romance,
-        Comedy,
-        Drama,
-        Period
+        public ICollection<Director> Directors { get; set; }
+        //public ICollection<Actor> Actors { get; set; }
     }
 }

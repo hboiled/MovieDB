@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MovieDB.Data;
 using MovieDB.Models.MovieDB.MovieModels;
+using MovieDB.Models.MovieDB.ViewModels;
 
 namespace MovieDB.Controllers.MovieData
 {
@@ -39,7 +40,12 @@ namespace MovieDB.Controllers.MovieData
         // GET: Movies/Create
         public ActionResult Create()
         {
-            return View();
+            MovieViewModel movieViewModel = new MovieViewModel
+            {
+                Directors = db.Directors.ToList()
+            };
+
+            return View(movieViewModel);
         }
 
         // POST: Movies/Create
@@ -47,13 +53,29 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,ReleaseDate,RunTime,Genre,DirectorId")] Movie movie)
+        public ActionResult Create(MovieViewModel movie)
         {
-            if (ModelState.IsValid)
+            try 
             {
-                db.Movies.Add(movie);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    Movie newMovie = new Movie
+                    {
+                        Title = movie.Title,
+                        ReleaseDate = movie.ReleaseDate,
+                        RunTime = movie.RunTime,
+                        DirectorId = movie.DirectorId,
+                        Genre = movie.Genre
+                    };
+
+                    db.Movies.Add(newMovie);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (DataException de)
+            {
+                ModelState.AddModelError("Error", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
             }
 
             return View(movie);
@@ -71,7 +93,18 @@ namespace MovieDB.Controllers.MovieData
             {
                 return HttpNotFound();
             }
-            return View(movie);
+            
+            MovieViewModel movieViewModel = new MovieViewModel
+            {
+                Title = movie.Title,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Genre = movie.Genre,
+                DirectorId = movie.DirectorId,
+                Directors = db.Directors.ToList()
+            };
+
+            return View(movieViewModel);
         }
 
         // POST: Movies/Edit/5

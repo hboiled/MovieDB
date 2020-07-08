@@ -56,6 +56,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -184,6 +185,7 @@
     <Compile Include="Models\MovieDB\MovieModels\Director.cs" />
     <Compile Include="Models\MovieDB\MovieModels\Movie.cs" />
     <Compile Include="Models\MovieDB\MovieModels\Person.cs" />
+    <Compile Include="Models\MovieDB\ViewModels\MovieViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
