@@ -41,24 +41,28 @@ namespace MovieDB.Data
                 {
                     Name="A1",
                     Age=19,
+                    Status = Status.Active,
                     Movies=new List<Movie>(),
                 },
                 new Actor
                 {
                     Name="A2",
                     Age=26,
+                    Status = Status.OnHold,
                     Movies=new List<Movie>(),
                 },
                 new Actor
                 {
                     Name="A3",
                     Age=30,
+                    Status = Status.Active,
                     Movies=new List<Movie>(),
                 },
                 new Actor
                 {
                     Name="A4",
                     Age=70,
+                    Status = Status.Retired,
                     Movies=new List<Movie>(),
                 }
             };
