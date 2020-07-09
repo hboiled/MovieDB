@@ -27,9 +27,11 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index"); //new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Actor actor = db.Actors.Find(id);
+
             if (actor == null)
             {
                 return HttpNotFound();
@@ -70,7 +72,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index"); //new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Actor actor = db.Actors.Find(id);
             if (actor == null)

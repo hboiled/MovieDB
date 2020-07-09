@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,7 @@ namespace MovieDB.Models.MovieDB.MovieModels
         public string Title { get; set; }
         [Display(Name = "Release Date")]
         [DataType(DataType.Date)]
+        [Column(TypeName = "date")]
         public DateTime ReleaseDate { get; set; }
         [Display(Name = "Run Time")]
         public TimeSpan RunTime { get; set; }
