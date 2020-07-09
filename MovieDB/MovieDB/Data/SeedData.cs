@@ -48,7 +48,7 @@ namespace MovieDB.Data
                 {
                     Name="A2",
                     Age=26,
-                    Status = Status.OnHold,
+                    Status = Status.Inactive,
                     Movies=new List<Movie>(),
                 },
                 new Actor

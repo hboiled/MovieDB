@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -17,8 +18,8 @@ namespace MovieDB.Models.MovieDB.MovieModels
 
     public enum Status
     {
-        Active,
-        OnHold,
+        Active,        
+        Inactive,
         Retired
     }
 }

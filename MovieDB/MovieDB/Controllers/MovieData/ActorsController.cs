@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using MovieDB.Data;
 using MovieDB.Models.MovieDB.MovieModels;
+using MovieDB.Models.MovieDB.ViewModels;
 
 namespace MovieDB.Controllers.MovieData
 {
@@ -39,7 +40,12 @@ namespace MovieDB.Controllers.MovieData
         // GET: Actors/Create
         public ActionResult Create()
         {
-            return View();
+            var actorViewModel = new ActorViewModel
+            {
+                Movies = db.Movies.ToList()
+            };
+
+            return View(actorViewModel);
         }
 
         // POST: Actors/Create
@@ -71,7 +77,16 @@ namespace MovieDB.Controllers.MovieData
             {
                 return HttpNotFound();
             }
-            return View(actor);
+            
+            var actorViewModel = new ActorViewModel
+            {
+                Name = actor.Name,
+                Age = actor.Age,
+                Status = actor.Status,
+                Movies = db.Movies.ToList()
+            };
+
+            return View(actorViewModel);
         }
 
         // POST: Actors/Edit/5
@@ -79,7 +94,7 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Age")] Actor actor)
+        public ActionResult Edit([Bind(Include = "Id,Name,Age,Status")] Actor actor)
         {
             if (ModelState.IsValid)
             {
@@ -113,6 +128,38 @@ namespace MovieDB.Controllers.MovieData
             Actor actor = db.Actors.Find(id);
             db.Actors.Remove(actor);
             db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        // GET: Actors/Create
+        public ActionResult AddMovies(int? id)
+        {
+            var actorViewModel = new ActorViewModel
+            {
+                Movies = db.Movies.ToList()
+            };
+
+            return View(actorViewModel);
+        }
+
+        // POST: Actors/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddMovies(int id, ActorViewModel actorViewModel)
+        {            
+            Movie movie = db.Movies.Find(actorViewModel.MovieId);
+            Actor actor = db.Actors.Find(id);
+            
+            actor.Movies.Add(movie);
+            movie.Actors.Add(actor);
+
+            db.Entry(movie).State = EntityState.Modified;
+            db.Entry(actor).State = EntityState.Modified;
+            // use vm movie id to get movie and add to actor movies
+            db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 

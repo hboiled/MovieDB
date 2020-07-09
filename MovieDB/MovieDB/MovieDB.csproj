@@ -185,6 +185,7 @@
     <Compile Include="Models\MovieDB\MovieModels\Director.cs" />
     <Compile Include="Models\MovieDB\MovieModels\Movie.cs" />
     <Compile Include="Models\MovieDB\MovieModels\Person.cs" />
+    <Compile Include="Models\MovieDB\ViewModels\ActorViewModel.cs" />
     <Compile Include="Models\MovieDB\ViewModels\MovieViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -257,6 +258,7 @@
     <Content Include="Views\Actors\Details.cshtml" />
     <Content Include="Views\Actors\Edit.cshtml" />
     <Content Include="Views\Actors\Index.cshtml" />
+    <Content Include="Views\Actors\AddMovies.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
