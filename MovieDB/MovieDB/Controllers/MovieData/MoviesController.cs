@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using MovieDB.Data;
 using MovieDB.Models.MovieDB.MovieModels;
 using MovieDB.Models.MovieDB.ViewModels;
+using MovieDB.UtilMethods;
 
 namespace MovieDB.Controllers.MovieData
 {
@@ -54,20 +56,29 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(MovieViewModel movie)
+        public ActionResult Create(MovieViewModel movie, HttpPostedFileBase file)
         {
             try 
             {
-                if (ModelState.IsValid)
-                {
+                if (ModelState.IsValid) 
+                { 
                     Movie newMovie = new Movie
                     {
                         Title = movie.Title,
                         ReleaseDate = movie.ReleaseDate,
                         RunTime = movie.RunTime,
                         DirectorId = movie.DirectorId,
-                        Genre = movie.Genre
+                        Genre = movie.Genre                        
                     };
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        using (var reader = new System.IO.BinaryReader(file.InputStream))
+                        {
+                            newMovie.Poster = reader.ReadBytes(file.ContentLength);
+                        }
+
+                    }
 
                     db.Movies.Add(newMovie);
                     db.SaveChanges();
@@ -87,7 +98,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index"); //return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Movie movie = db.Movies.Find(id);
             if (movie == null)
@@ -113,10 +124,20 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,ReleaseDate,RunTime,Genre,DirectorId")] Movie movie)
+        public ActionResult Edit([Bind(Include = "Id,Title,ReleaseDate,RunTime,Genre,DirectorId")] Movie movie,
+            HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (var reader = new System.IO.BinaryReader(file.InputStream))
+                    {
+                        movie.Poster = reader.ReadBytes(file.ContentLength);
+                    }
+
+                }
+
                 db.Entry(movie).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -129,7 +150,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index"); 
             }
             Movie movie = db.Movies.Find(id);
             if (movie == null)

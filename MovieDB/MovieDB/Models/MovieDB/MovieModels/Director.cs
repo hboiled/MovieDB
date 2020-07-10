@@ -11,6 +11,7 @@ namespace MovieDB.Models.MovieDB.MovieModels
         public int Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
+        public byte[] Photo { get; set; }
 
         [Display(Name = "Directing Credits")]
         public virtual ICollection<Movie> Movies { get; set; }

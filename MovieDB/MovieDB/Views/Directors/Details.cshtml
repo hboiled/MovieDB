@@ -6,52 +6,68 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Director</h4>
+<div class="row">
+    <h3>Director</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Photo)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @if (Model.Photo != null)
+                {
+                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Photo))" alt="Movie poster" />
+                }
+                else
+                {
+                    <img src="~/Content/image-placeholder.png" alt="Placehoder image" />
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Age)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Age)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Age)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Movies)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Age)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Movies.Count)
-        </dd>
-    </dl>
-    <hr />
-    <h4>
-        Directing Credits:
-    </h4>
-    <dl class="dl-horizontal">
+        </dl>
+        
+        
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Movies):
+            </dt>
 
-        @if (Model.Movies.Count > 0)
-        {
-
-            foreach (var movie in Model.Movies)
+            @if (Model.Movies.Count > 0)
             {
-                <dd>
 
-                    @Html.ActionLink(movie.Title, "Details", "Movies", new { id = movie.Id }, null)
-                </dd>
+                foreach (var movie in Model.Movies)
+                {
+                    <dd>
+
+                        @Html.ActionLink(movie.Title, "Details", "Movies", new { id = movie.Id }, null)
+                    </dd>
+                }
             }
-        }
-    </dl>
+        </dl>
+    </div>
+    <hr />
+    
     <hr />
 </div>
 <p>

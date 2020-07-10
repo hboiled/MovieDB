@@ -27,7 +27,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Director director = db.Directors.Find(id);
             if (director == null)
@@ -48,10 +48,19 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Age")] Director director)
+        public ActionResult Create([Bind(Include = "Id,Name,Age")] Director director, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (var reader = new System.IO.BinaryReader(file.InputStream))
+                    {
+                        director.Photo = reader.ReadBytes(file.ContentLength);
+                    }
+
+                }
+
                 db.Directors.Add(director);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -65,7 +74,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Director director = db.Directors.Find(id);
             if (director == null)
@@ -96,7 +105,7 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index");
             }
             Director director = db.Directors.Find(id);
             if (director == null)
