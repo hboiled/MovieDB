@@ -6,60 +6,82 @@
 
 <h2>Details</h2>
 
-<div>
-    <h4>Movie</h4>
+<div class="row">
+    <h3>@Model.Title</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ReleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ReleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RunTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RunTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Genre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Genre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Director)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Director.Name)
-        </dd>
-        @foreach (MovieDB.Models.MovieDB.MovieModels.Actor actor in Model.Actors)
-        {
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
             <dt>
-                Actor
+                @Html.DisplayNameFor(model => model.Poster)
             </dt>
 
             <dd>
-                @actor.Name
+                @if (Model.Poster != null)
+                {
+                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Poster))" alt="Movie poster" />
+                }
+                else
+                {
+                    <img src="~/Content/image-placeholder.png" alt="Placehoder image" />
+                }
             </dd>
-        }
-    </dl>
+        </dl>
+    </div>
+
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ReleaseDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.RunTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RunTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Genre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Genre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Director)
+            </dt>
+
+            <dd>
+                @Html.ActionLink(Model.Director.Name, "Details", "Directors", new { id = Model.Director.Id }, null)
+            </dd>
+            @foreach (MovieDB.Models.MovieDB.MovieModels.Actor actor in Model.Actors)
+            {
+                <dt>
+                    Actor
+                </dt>
+
+                <dd>
+                    @Html.ActionLink(actor.Name, "Details", "Actors", new { id = actor.Id }, null)
+                </dd>
+            }
+        </dl>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

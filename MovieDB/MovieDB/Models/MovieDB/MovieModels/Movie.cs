@@ -19,8 +19,9 @@ namespace MovieDB.Models.MovieDB.MovieModels
         public TimeSpan RunTime { get; set; }
         public int DirectorId { get; set; }
         public Genre Genre { get; set; }
+        public byte[] Poster { get; set; }
 
-        
+
         public virtual Director Director { get; set; }
 
         public virtual ICollection<Actor> Actors { get; set; }

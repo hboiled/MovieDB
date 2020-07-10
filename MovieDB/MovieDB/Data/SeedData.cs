@@ -1,6 +1,9 @@
 ﻿using MovieDB.Models.MovieDB.MovieModels;
+using MovieDB.UtilMethods;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -70,6 +73,8 @@ namespace MovieDB.Data
             actors.ForEach(a => context.Actors.Add(a));
             context.SaveChanges();
 
+            var m1poster = ImgProc.ImageToByteArray(Image.FromFile(@"C:\Users\61406\Pictures\posters\goodfellas.jpg"));
+
             var movies = new List<Movie>
             {
                 new Movie
@@ -79,7 +84,8 @@ namespace MovieDB.Data
                     RunTime=new TimeSpan(1,30,0),
                     Genre=Genre.Action,
                     DirectorId = 1,
-                    Actors=new List<Actor> {}
+                    Actors=new List<Actor> {},
+                    Poster=m1poster
                 },
                 new Movie
                 {
@@ -136,5 +142,6 @@ namespace MovieDB.Data
                 movie.Actors.Add(actor);
             }
         }
+
     }
 }

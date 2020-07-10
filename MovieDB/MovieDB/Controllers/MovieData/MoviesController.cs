@@ -27,8 +27,9 @@ namespace MovieDB.Controllers.MovieData
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index"); //new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Movie movie = db.Movies.Find(id);
             if (movie == null)
             {
@@ -97,7 +98,7 @@ namespace MovieDB.Controllers.MovieData
             MovieViewModel movieViewModel = new MovieViewModel
             {
                 Title = movie.Title,
-                ReleaseDate = movie.ReleaseDate,
+                ReleaseDate = movie.ReleaseDate.Date,
                 RunTime = movie.RunTime,
                 Genre = movie.Genre,
                 DirectorId = movie.DirectorId,

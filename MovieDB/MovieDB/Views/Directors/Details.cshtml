@@ -35,7 +35,23 @@
         </dd>
     </dl>
     <hr />
-    @* Display movies *@
+    <h4>
+        Directing Credits:
+    </h4>
+    <dl class="dl-horizontal">
+
+        @if (Model.Movies.Count > 0)
+        {
+
+            foreach (var movie in Model.Movies)
+            {
+                <dd>
+
+                    @Html.ActionLink(movie.Title, "Details", "Movies", new { id = movie.Id }, null)
+                </dd>
+            }
+        }
+    </dl>
     <hr />
 </div>
 <p>
