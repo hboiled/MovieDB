@@ -81,8 +81,47 @@
                 </dd>
             }
         </dl>
-    </div>
+    </div>    
 </div>
+
+<hr />
+
+    <div class="row">
+        <h3>Personnel:</h3>
+        <hr />
+            <h4>Director:</h4>
+            <div class="col-md-2">
+
+                <a href="@Url.Action("Details", "Directors", new { id = Model.DirectorId })">
+                    <img src="@Url.Action("Thumbnail", "Movies", new { id = Model.DirectorId })"
+                         class="img-responsive" />
+                    @Model.Director.Name
+                </a>
+            </div>
+</div>
+
+    <hr />
+
+    <div class="row">
+        <h4>Actors:</h4>
+        <div class="actors">
+            @foreach (var actor in Model.Actors)
+            {
+
+                <div class="col-md-2">
+                    <a href="@Url.Action("Details", "Actors", new { id = actor.Id })">
+                        <img src="@Url.Action("Thumbnail", "Movies", new { id = actor.Id })"
+                             class="img-responsive" />
+                        @actor.Name
+                    </a>
+                </div>
+
+            }
+        </div>
+
+    </div>
+<hr />
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")

@@ -191,6 +191,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\MovieData\ActorsController.cs" />
+    <Compile Include="UtilMethods\ImageExtensions.cs" />
+    <Compile Include="UtilMethods\ImageResult.cs" />
     <Compile Include="UtilMethods\ImgProc.cs" />
   </ItemGroup>
   <ItemGroup>
