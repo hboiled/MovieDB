@@ -89,11 +89,27 @@ namespace MovieDB.Controllers.MovieData
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Age")] Director director)
+        public ActionResult Edit([Bind(Include = "Id,Name,Age")] Director director, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file.ContentLength > 0)
+                {
+                    using (var reader = new System.IO.BinaryReader(file.InputStream))
+                    {
+                        director.Photo = reader.ReadBytes(file.ContentLength);
+                    }
+
+                }
+
                 db.Entry(director).State = EntityState.Modified;
+
+                if (file == null)
+                {
+                    // If no file is selected, do not update photo prop
+                    db.Entry(director).Property(d => d.Photo).IsModified = false;
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

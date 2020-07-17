@@ -140,6 +140,12 @@ namespace MovieDB.Controllers.MovieData
                 }
 
                 db.Entry(movie).State = EntityState.Modified;
+
+                if (file == null)
+                {
+                    db.Entry(movie).Property(p => p.Poster).IsModified = false;
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -172,28 +178,6 @@ namespace MovieDB.Controllers.MovieData
             return RedirectToAction("Index");
         }
 
-        //[ETag, OutputCache(Duration = 3600, VaryByParam = "filename")]
-        public ActionResult Thumbnail(int? id)
-        {
-            //Image image = ImgProc.ByteArrayToImage(img);
-            //return new ImageResult(image.BestFit(291, 285));
-            var poster = db.Movies.Find(id).Poster;
-            Image image;
-
-            if (poster != null)
-            {
-                image = ImgProc.ByteArrayToImage(poster);   
-            } else
-            {
-                //image = Image.FromFile(@"C:\Users\61406\Pictures\posters\image-placeholder.png");
-                string path = Server.MapPath(@"~\Content\image-placeholder.png");
-                image = Image.FromFile(
-                        path
-                    );
-            }
-
-            return new ImageResult(image.BestFit(150, 150));
-        }
 
         protected override void Dispose(bool disposing)
         {

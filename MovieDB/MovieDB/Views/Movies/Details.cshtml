@@ -93,7 +93,7 @@
             <div class="col-md-2">
 
                 <a href="@Url.Action("Details", "Directors", new { id = Model.DirectorId })">
-                    <img src="@Url.Action("Thumbnail", "Movies", new { id = Model.DirectorId })"
+                    <img src="@Url.Action("DirectorsThumbnail", "Thumbnail", new { id = Model.DirectorId })"
                          class="img-responsive" />
                     @Model.Director.Name
                 </a>
@@ -110,7 +110,7 @@
 
                 <div class="col-md-2">
                     <a href="@Url.Action("Details", "Actors", new { id = actor.Id })">
-                        <img src="@Url.Action("Thumbnail", "Movies", new { id = actor.Id })"
+                        <img src="@Url.Action("ActorsThumbnail", "Thumbnail", new { id = actor.Id })"
                              class="img-responsive" />
                         @actor.Name
                     </a>
